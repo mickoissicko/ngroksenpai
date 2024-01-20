@@ -12,7 +12,7 @@
 * Works with Archlinux
 * Better than Hardware Haven's solution, can work on multiple Ngrok sessions.
 
-# How to use
+# Installation for Archlinux
 Step 1 **Installing ngrok**
 
 Step 1a **Install snap**
@@ -64,3 +64,63 @@ Navigate to Line 26, and edit this:
 with the actual webhook URI.
 
 ![](https://i.ibb.co/0Qb8d4q/Untitled.png)
+
+After you have added the URL, run the following command in the directory where `ngroksenpai.py` is located.
+
+`$ sudo python ngroksenpai.py`
+
+Enter your password and it should send the links in Discord!
+
+# Installation for Windows
+Step 1. **Installing Ngrok**
+
+Install [ngrok](ngrok.com). You can choose the [64-bit version](https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-windows-amd64.zip) or the [32-bit version](https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-windows-386.zip). 
+
+Step 2 **Making an account and logging in**
+
+Make an account on the [ngrok](https://dashboard.ngrok.com/signup) website.
+
+After you have made the account, navigate to the [setup](https://dashboard.ngrok.com/get-started/setup/linux) page
+
+Open a command prompt window in the folder where you downloaded ngrok, and type
+
+`$ ngrok.exe config add-authtoken THE-AUTHTOKEN-GIVEN`
+
+Step 3 **Starting the service**
+
+Open a command prompt window in the folder where you downloaded ngrok.
+
+You can start 3 ngrok tunnels in locations: in, ap, eu, au, and us.
+
+`$ ngrok tcp --region eu 25565`
+
+`$ ngrok tcp --region ap 25565`
+
+`$ ngrok tcp --region in 25565`
+
+`$ ngrok tcp --region au 25565`
+
+`$ ngrok tcp --region us 25565`
+
+Select the region closest to your friends.
+
+IN is India, AP is Asia Pacific, EU is Europe, AU is Australia, and US is the United States.
+
+Let's say you have 3 friends **(impossible)**. One is from Amsterdam, one is from Sydney, and the other one is from Hong Kong. This is perfect as you can only operate 3 Ngrok tunnels per account (max).
+
+You start the tunnels.
+
+Step 4 **Running the tool**
+Navigate to Line 26, and edit this:
+
+`discord_webhook_url = "ur_webhook_noob"`
+
+with the actual webhook URI.
+
+![](https://i.ibb.co/0Qb8d4q/Untitled.png)
+
+After you have added the URL, run the following command in the directory where `ngroksenpai.py` is located.
+
+`$ sudo python ngroksenpai.py`
+
+Enter your password and it should send the links in Discord!
