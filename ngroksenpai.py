@@ -32,7 +32,7 @@ def main():
         ".ap": "Singapore",
         ".in": "Mumbai",
         ".eu": "Europe",
-        ".us": "Ohio",
+        "": "Ohio",
     }
 
     for curl_command in curl_commands:
