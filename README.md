@@ -57,13 +57,17 @@ Let's say you have 3 friends **(impossible)**. One is from Amsterdam, one is fro
 You start the tunnels.
 
 Step 4 **Running the tool**
+Copy the webhook URL
+
+![](https://i.ibb.co/0Qb8d4q/Untitled.png)
+
 Navigate to Line 26, and edit this:
 
 `discord_webhook_url = "ur_webhook_noob"`
 
 with the actual webhook URI.
 
-![](https://i.ibb.co/0Qb8d4q/Untitled.png)
+![](https://i.ibb.co/wyTZ0nH/2.png)
 
 After you have added the URL, run the following command in the directory where `ngroksenpai.py` is located.
 
@@ -111,13 +115,17 @@ Let's say you have 3 friends **(impossible)**. One is from Amsterdam, one is fro
 You start the tunnels.
 
 Step 4 **Running the tool**
+Copy the webhook URL
+
+![](https://i.ibb.co/0Qb8d4q/Untitled.png)
+
 Navigate to Line 26, and edit this:
 
 `discord_webhook_url = "ur_webhook_noob"`
 
 with the actual webhook URI.
 
-![](https://i.ibb.co/0Qb8d4q/Untitled.png)
+![](https://i.ibb.co/wyTZ0nH/2.png)
 
 After you have added the URL, run the following command in the directory where `ngroksenpai.py` is located.
 
