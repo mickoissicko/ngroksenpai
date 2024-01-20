@@ -19,6 +19,8 @@ def main():
         "curl 127.0.0.1:4040/api/tunnels",
         "curl 127.0.0.1:4041/api/tunnels",
         "curl 127.0.0.1:4042/api/tunnels",
+        "curl 127.0.0.1:4043/api/tunnels",
+        "curl 127.0.0.1:4044/api/tunnels",
     ]
 
     target_string = "tcp://"
