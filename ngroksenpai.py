@@ -9,8 +9,9 @@ def check_tunnel(curl_command, target_string):
         return output
     return None
 
-def send_discord_webhook(webhook_url, message):
-    payload = {"content": f"`{message}`"}
+def send_discord_webhook(webhook_url, region, url):
+    message = f"* {region} ===> `{url}`"
+    payload = {"content": message}
     requests.post(webhook_url, json=payload)
 
 def main():
@@ -24,6 +25,14 @@ def main():
 
     discord_webhook_url = "ur_webhook_noob"
 
+    region_mapping = {
+        ".au": "Sydney",
+        ".ap": "Singapore",
+        ".in": "Mumbai",
+        ".eu": "Europe",
+        ".us": "Ohio",
+    }
+
     for curl_command in curl_commands:
         result = check_tunnel(curl_command.split(), target_string)
         if result:
@@ -31,9 +40,11 @@ def main():
             tunnel_info = data["tunnels"][0]
             public_url = tunnel_info["public_url"]
 
-            public_url = public_url.replace("tcp://", "")
-
-            send_discord_webhook(discord_webhook_url, public_url)
+            for region_code, region_name in region_mapping.items():
+                if region_code in public_url:
+                    public_url = public_url.replace("tcp://", "")
+                    send_discord_webhook(discord_webhook_url, f"{region_name}", public_url)
+                    break
 
 if __name__ == "__main__":
     main()
