@@ -10,7 +10,7 @@ def check_tunnel(curl_command, target_string):
     return None
 
 def send_discord_webhook(webhook_url, region, url):
-    message = f"* {region} ===> `{url}`"
+    message = f"* {region} === `{url}`"
     payload = {"content": message}
     requests.post(webhook_url, json=payload)
 
