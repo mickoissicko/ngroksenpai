@@ -1,6 +1,22 @@
 import subprocess
 import requests
 import json
+import os
+import sys
+import time
+
+LOCK_FILE = "ngroksenpai.lock"
+
+def check_lock_file():
+    return os.path.exists(LOCK_FILE)
+
+def create_lock_file():
+    with open(LOCK_FILE, "w") as lock_file:
+        lock_file.write(str(os.getpid()))
+
+def remove_lock_file():
+    if os.path.exists(LOCK_FILE):
+        os.remove(LOCK_FILE)
 
 def check_tunnel(curl_command, target_string):
     result = subprocess.run(curl_command, capture_output=True, text=True)
@@ -15,38 +31,47 @@ def send_discord_webhook(webhook_url, region, url):
     requests.post(webhook_url, json=payload)
 
 def main():
-    curl_commands = [
-        "curl 127.0.0.1:4040/api/tunnels",
-        "curl 127.0.0.1:4041/api/tunnels",
-        "curl 127.0.0.1:4042/api/tunnels",
-        "curl 127.0.0.1:4043/api/tunnels",
-        "curl 127.0.0.1:4044/api/tunnels",
-    ]
+    if check_lock_file():
+        print("Another instance is already running. Exiting.")
+        sys.exit(1)
 
-    target_string = "tcp://"
+    create_lock_file()
 
-    discord_webhook_url = "ur_webhook_noob"
+    try:
+        curl_commands = [
+            "curl 127.0.0.1:4040/api/tunnels",
+            "curl 127.0.0.1:4041/api/tunnels",
+            "curl 127.0.0.1:4042/api/tunnels",
+            "curl 127.0.0.1:4043/api/tunnels",
+            "curl 127.0.0.1:4044/api/tunnels",
+        ]
 
-    region_mapping = {
-        ".au": "Sydney",
-        ".ap": "Singapore",
-        ".in": "Mumbai",
-        ".eu": "Europe",
-        "": "Ohio",
-    }
+        target_string = "tcp://"
 
-    for curl_command in curl_commands:
-        result = check_tunnel(curl_command.split(), target_string)
-        if result:
-            data = json.loads(result)
-            tunnel_info = data["tunnels"][0]
-            public_url = tunnel_info["public_url"]
+        discord_webhook_url = "your_webhook"
 
-            for region_code, region_name in region_mapping.items():
-                if region_code in public_url:
-                    public_url = public_url.replace("tcp://", "")
-                    send_discord_webhook(discord_webhook_url, f"{region_name}", public_url)
-                    break
+        region_mapping = {
+            ".au": "Sydney",
+            ".ap": "Singapore",
+            ".in": "Mumbai",
+            ".eu": "Europe",
+            "": "Ohio",
+        }
+
+        for curl_command in curl_commands:
+            result = check_tunnel(curl_command.split(), target_string)
+            if result:
+                data = json.loads(result)
+                tunnel_info = data["tunnels"][0]
+                public_url = tunnel_info["public_url"]
+
+                for region_code, region_name in region_mapping.items():
+                    if region_code in public_url:
+                        public_url = public_url.replace("tcp://", "")
+                        send_discord_webhook(discord_webhook_url, f"{region_name}", public_url)
+                        break
+    finally:
+        remove_lock_file()
 
 if __name__ == "__main__":
     main()
