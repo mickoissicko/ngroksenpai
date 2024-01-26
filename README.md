@@ -113,22 +113,3 @@ IN is India, AP is Asia Pacific, EU is Europe, AU is Australia, and US is the Un
 Let's say you have 3 friends **(impossible)**. One is from Amsterdam, one is from Sydney, and the other one is from Hong Kong. This is perfect as you can only operate 3 Ngrok tunnels per account (max).
 
 You start the tunnels.
-
-Step 4 **Running the tool**
-Copy the webhook URL
-
-![](https://i.ibb.co/0Qb8d4q/Untitled.png)
-
-Navigate to Line 26, and edit this:
-
-`discord_webhook_url = "ur_webhook_noob"`
-
-with the actual webhook URI.
-
-![](https://i.ibb.co/wyTZ0nH/2.png)
-
-After you have added the URL, run the following command in the directory where `ngroksenpai.py` is located.
-
-`$ sudo python ngroksenpai.py`
-
-Enter your password and it should send the links in Discord!
