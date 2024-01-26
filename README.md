@@ -109,7 +109,3 @@ You can start 3 ngrok tunnels in locations: in, ap, eu, au, and us.
 Select the region closest to your friends.
 
 IN is India, AP is Asia Pacific, EU is Europe, AU is Australia, and US is the United States.
-
-Let's say you have 3 friends **(impossible)**. One is from Amsterdam, one is from Sydney, and the other one is from Hong Kong. This is perfect as you can only operate 3 Ngrok tunnels per account (max).
-
-You start the tunnels.
