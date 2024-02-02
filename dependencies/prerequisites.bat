@@ -51,6 +51,7 @@ echo Installing Java...
 cd "%currentDir"
 cd ..
 choco install oraclejdk -y --params 'installdir=bin/java'
+echo installation compwete
 
 cd "%currentDir%"
 cd ..
