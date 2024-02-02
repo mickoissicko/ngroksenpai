@@ -6,19 +6,6 @@ import os
 import sys
 import time
 
-LOCK_FILE = "ngroksenpai.lock"
-
-def check_lock_file():
-    return os.path.exists(LOCK_FILE)
-
-def create_lock_file():
-    with open(LOCK_FILE, "w") as lock_file:
-        lock_file.write(str(os.getpid()))
-
-def remove_lock_file():
-    if os.path.exists(LOCK_FILE):
-        os.remove(LOCK_FILE)
-
 def check_tunnel(curl_command, target_string):
     result = subprocess.run(curl_command, capture_output=True, text=True)
     output = result.stdout
@@ -42,13 +29,6 @@ def read_config(file_path):
     return config
 
 def main():
-    if check_lock_file():
-        print("Another instance is already running. Exiting.")
-        sys.exit(1)
-
-    create_lock_file()
-
-    try:
         config = read_config('../config/ngs.conf')
 
         if config.get('autongrok') == 'True':
@@ -101,8 +81,6 @@ def main():
                         public_url = public_url.replace("tcp://", "")
                         send_discord_webhook(discord_webhook_url, f"{region_name}", public_url)
                         break
-    finally:
-        remove_lock_file()
-
+                
 if __name__ == "__main__":
     main()
