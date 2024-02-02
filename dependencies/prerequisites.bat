@@ -55,4 +55,4 @@ choco install oraclejdk -y --params 'installdir=bin/java'
 cd "%currentDir%"
 cd ..
 cd scripts
-py launcher.py
+py main.py
