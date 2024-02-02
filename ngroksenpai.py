@@ -30,24 +30,6 @@ def send_discord_webhook(webhook_url, region, url):
     payload = {"content": message}
     requests.post(webhook_url, json=payload)
 
-def read_config(file_path):
-    config = {}
-    with open(file_path, 'r') as file:
-        lines = file.readlines()
-        for line in lines:
-            if '=' in line:
-                key, value = line.strip().split('=')
-                config[key.strip()] = value.strip()
-    return config
-
-def prompt_user_autostart():
-    autostart = input("Do you want to enable Ngrok autostart? [y/n]: ").lower()
-    return autostart == 'y'
-
-def prompt_user_configure_webhook():
-    configure_webhook = input("Have you configured the Discord webhook? [y/n]: ").lower()
-    return configure_webhook == 'y'
-
 def main():
     if check_lock_file():
         print("Another instance is already running. Exiting.")
@@ -56,18 +38,6 @@ def main():
     create_lock_file()
 
     try:
-        config = read_config('conf/ngs.config')
-
-        autostart = config.get('autongrok') == 'True' or prompt_user_autostart()
-
-        if autostart:
-            script_path = 'start.sh' if sys.platform in ['darwin', 'linux'] else 'start.bat'
-            starter_script_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), script_path)
-            subprocess.Popen(['cmd', '/c', starter_script_path])
-
-        time.sleep(15)
-        print("WORKING")
-
         curl_commands = [
             "curl 127.0.0.1:4040/api/tunnels",
             "curl 127.0.0.1:4041/api/tunnels",
@@ -78,11 +48,7 @@ def main():
 
         target_string = "tcp://"
 
-        webhook_file_path = 'conf/webhook.txt'
-        if not os.path.exists(webhook_file_path) or not prompt_user_configure_webhook():
-            discord_webhook_url = input("Enter Discord webhook URL: ").strip()
-            with open(webhook_file_path, 'w') as webhook_file:
-                webhook_file.write(discord_webhook_url)
+        discord_webhook_url = "your_webhook"
 
         region_mapping = {
             ".au": "Sydney",
@@ -102,7 +68,7 @@ def main():
                 for region_code, region_name in region_mapping.items():
                     if region_code in public_url:
                         public_url = public_url.replace("tcp://", "")
-                        send_discord_webhook(config['discord_webhook_url'], f"{region_name}", public_url)
+                        send_discord_webhook(discord_webhook_url, f"{region_name}", public_url)
                         break
     finally:
         remove_lock_file()
