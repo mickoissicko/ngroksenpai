@@ -81,6 +81,6 @@ def main():
                         public_url = public_url.replace("tcp://", "")
                         send_discord_webhook(discord_webhook_url, f"{region_name}", public_url)
                         break
-                
+
 if __name__ == "__main__":
     main()
