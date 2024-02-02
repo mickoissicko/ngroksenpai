@@ -38,7 +38,7 @@ def modconf():
                 webhook_file.write(webhook_url)
             print("Webhook URL saved successfully.")
         else:
-            print("Webhook URL not provided. Skipping.")
+            print("I assume you already provided it. Skipping.")
 
     except FileNotFoundError:
         print("Configuration file not found. Please make sure the file exists.")
