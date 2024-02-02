@@ -6,7 +6,7 @@ if [ -e lock.pa ]; then
     echo Already satisfied
     echo Exiting in 3s..
     sleep 3
-    python ../launcher.py
+    python ../main.py
     exit 0
 fi
 

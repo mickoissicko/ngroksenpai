@@ -6,4 +6,4 @@ chmod +x install.sh
 ./install.sh
 
 cd ../scripts
-sudo python launcher.py
+sudo python main.py

@@ -7,7 +7,7 @@ cd ../config
 if exist lock.pa (
     cd ..
     cd scripts
-    py launcher.py
+    py main.py
 ) else (
     cd ..
     cd config
