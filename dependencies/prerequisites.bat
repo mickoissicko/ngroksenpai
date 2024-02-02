@@ -8,6 +8,7 @@ if exist lock.pa (
     cd ..
     cd scripts
     py main.py
+    exit
 ) else (
     cd ..
     cd config
@@ -58,3 +59,5 @@ cd "%currentDir%"
 cd ..
 cd scripts
 py main.py
+
+exit
