@@ -7,3 +7,5 @@ cd /d "%~dp0" && ( if exist "%temp%\getadmin.vbs" del "%temp%\getadmin.vbs" ) &&
 
 cd dependencies/
 "prerequisites.bat"
+
+exit
