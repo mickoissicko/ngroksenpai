@@ -1,50 +1,52 @@
 import platform
 import os
 
-def launch_ngs():
-    if platform.system() == 'Linux' or platform.system() == 'Darwin' or platform.system() == 'MacOS':
-        os.system('sudo python bin/ngroksenpai.py')
+def cls():
+    if platform.system() in ['Linux', 'Darwin']:
+        os.system('clear')
     elif platform.system() == 'Windows':
-        os.system('python bin/ngroksenpai.py')
+        os.system('cls')
+
+def launch_ngs():
+    cls()
+    if platform.system() == 'Linux' or platform.system() == 'Darwin' or platform.system() == 'MacOS':
+        os.system('sudo python ../bin/ngroksenpai.py')
+    elif platform.system() == 'Windows':
+        os.system('python ../bin/ngroksenpai.py')
 
 def modconf():
+    cls()
     config_file_path = "../config/ngs.conf"
     webhook_file_path = "../config/webhook.txt"
 
-    try:
-        with open(config_file_path, 'r') as file:
-            config_lines = file.readlines()
+    start_ngrok = input("Automatically start Ngrok upon launch? [Y/N] (Enter to skip): ").upper()
 
-        for i in range(len(config_lines)):
-            if config_lines[i].startswith("# autongrok="):
-                current_setting = config_lines[i].strip().split('=')[1].lower()
-                auto_start_ngrok = input(f"Automatically start NGROK? [Y/N] (current setting: {current_setting}): ").upper()
+    with open(config_file_path, 'r') as config_file:
+        config_lines = config_file.readlines()
+    autongrok_line = next((line for line in config_lines if 'autongrok' in line), None)
 
-                if auto_start_ngrok == 'Y':
-                    config_lines[i] = "autongrok=True\n"
-                elif auto_start_ngrok == 'N':
-                    config_lines[i] = "# autongrok=True\n"
-                else:
-                    print("Invalid input. Keeping the current setting.")
-
-        with open(config_file_path, 'w') as file:
-            file.writelines(config_lines)
-
-        print("Configuration updated successfully.")
-
-        webhook_url = input("Enter the webhook URL: (Enter to skip) ")
-        if webhook_url:
-            with open(webhook_file_path, 'w') as webhook_file:
-                webhook_file.write(webhook_url)
-            print("Webhook URL saved successfully.")
+    if start_ngrok == 'Y':
+        if autongrok_line is not None:
+            config_lines = [line.replace('# autongrok=True', 'autongrok=True') for line in config_lines]
         else:
-            print("I assume you already provided it. Skipping.")
+            config_lines.append('\n# Ngrok config\n# do not modify\n#\n# autongrok=True\n# user.choice.1=True\n# user.choice.2=True\n')
+            config_lines.append('autongrok=True\n')
 
-    except FileNotFoundError:
-        print("Configuration file not found. Please make sure the file exists.")
+    elif start_ngrok == 'N':
+        if autongrok_line is not None:
+            config_lines = [line.replace('autongrok=True', '# autongrok=True') for line in config_lines]
+
+    with open(config_file_path, 'w') as config_file:
+        config_file.writelines(config_lines)
+    webhook_url = input("Enter your Discord webhook URL: (Enter to skip): ")
+
+    if webhook_url:
+        with open(webhook_file_path, 'w') as webhook_file:
+            webhook_file.write(webhook_url)
 
 
 def main():
+    cls()
     while True:
         print("\n[1] Launch NGS")
         print("[2] Modify configuration")
