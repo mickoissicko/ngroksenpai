@@ -20,9 +20,6 @@ cd ngrok
 makepkg -si
 
 cd ../config
+
 touch lock.pa
-
-py ../scripts/main.py
-python ../scripts/main.py
-
 exit
