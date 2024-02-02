@@ -51,7 +51,8 @@ def main():
         print("\n[1] Launch NGS")
         print("[2] Modify configuration")
         print("[X] Quit")
-
+        print("DO NOT USE CTRL + C TO EXIT!")
+        
         choice = input("Enter your choice: ")
 
         if choice == '1':
