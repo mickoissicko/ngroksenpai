@@ -9,6 +9,16 @@ def cls():
 
 def launch_ngs():
     cls()
+
+    token_file_path = "../config/ngrok.txt"
+    with open(token_file_path, 'r') as ngrok_token_file:
+        ngrok_token = ngrok_token_file.read().strip()
+        
+    if platform.system() in ['Linux', 'Darwin', 'MacOS']:
+        os.system(f'ngrok config add-authtoken {ngrok_token}')
+    elif platform.system() == 'Windows':
+        os.system(f'../ngrok/ngrok.exe config add-authtoken {ngrok_token}')
+
     if platform.system() == 'Linux' or platform.system() == 'Darwin' or platform.system() == 'MacOS':
         os.system('sudo python ../bin/ngroksenpai.py')
     elif platform.system() == 'Windows':
@@ -18,6 +28,7 @@ def modconf():
     cls()
     config_file_path = "../config/ngs.conf"
     webhook_file_path = "../config/webhook.txt"
+    token_file_path = "../config/ngrok.txt"
 
     start_ngrok = input("Automatically start Ngrok upon launch? [Y/N] (Enter to skip): ").upper()
 
@@ -38,11 +49,18 @@ def modconf():
 
     with open(config_file_path, 'w') as config_file:
         config_file.writelines(config_lines)
+
     webhook_url = input("Enter your Discord webhook URL: (Enter to skip): ")
 
     if webhook_url:
         with open(webhook_file_path, 'w') as webhook_file:
             webhook_file.write(webhook_url)
+
+    ngrok_token = input("Please enter your Ngrok authentication token: (Enter to skip) ")
+
+    if ngrok_token:
+        with open(token_file_path, 'w') as ngrok_token_file:
+            ngrok_token_file.write(ngrok_token)
 
 
 def main():
