@@ -28,6 +28,10 @@ echo Installing Chocolatey...
 echo Installing curl...
 choco install curl -y
 
+echo Installation complete.
+
+cd "%currentDir%"
+
 cd ..
 mkdir ngrok
 cd ngrok
@@ -40,11 +44,6 @@ tar -xf ngrok-v3-stable-windows-amd64.zip
 cd ..
 
 echo Download & extraction complete.
-
-echo Installation complete.
-
-cd "%currentDir%"
-
 echo Installing Python and libraries.
 choco install python39 -y
 py -m pip install requests
