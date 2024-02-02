@@ -7,3 +7,5 @@ chmod +x install.sh
 
 cd ../scripts
 sudo python main.py
+
+exit
