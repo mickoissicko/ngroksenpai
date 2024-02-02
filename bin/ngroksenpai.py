@@ -1,4 +1,5 @@
 import subprocess
+import platform
 import requests
 import json
 import os
@@ -30,6 +31,16 @@ def send_discord_webhook(webhook_url, region, url):
     payload = {"content": message}
     requests.post(webhook_url, json=payload)
 
+def read_config(file_path):
+    config = {}
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+        for line in lines:
+            if '=' in line:
+                key, value = line.strip().split('=')
+                config[key.strip()] = value.strip()
+    return config
+
 def main():
     if check_lock_file():
         print("Another instance is already running. Exiting.")
@@ -38,6 +49,19 @@ def main():
     create_lock_file()
 
     try:
+        config = read_config('../config/ngs.conf')
+
+        if config.get('autongrok') == 'True':
+            if platform.system() == "Windows":
+                starter_script_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../scripts/ngstart.bat')
+                subprocess.Popen([starter_script_path], shell=True)
+            else:
+                starter_script_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../scripts/ngstart.sh')
+                subprocess.Popen(['bash', starter_script_path])
+
+        time.sleep(15)
+        print("WORKING")
+
         curl_commands = [
             "curl 127.0.0.1:4040/api/tunnels",
             "curl 127.0.0.1:4041/api/tunnels",
@@ -48,7 +72,14 @@ def main():
 
         target_string = "tcp://"
 
-        discord_webhook_url = "your_webhook"
+        webhook_file_path = '../config/webhook.txt'  # Updated webhook file path
+        if os.path.exists(webhook_file_path):
+            with open(webhook_file_path, 'r') as webhook_file:
+
+                discord_webhook_url = webhook_file.read().strip() # webhook func
+        else:
+            print("Error: webhook.txt not found. Please create the file with your Discord webhook URL and rerun the application.")
+            sys.exit(1)
 
         region_mapping = {
             ".au": "Sydney",
