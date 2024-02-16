@@ -2,6 +2,9 @@
 * Does your ISP use CGNAT, or just hates everyone and blocks port-forwarding? And you are too much of a wuss to call them to fix it? This is for you!
 * Is copy-pasting the multiple Ngrok proxies for each of your friends too hard? NGS' 'gotchu covered!
 
+# Preview
+![](.prev/ngsPreview.png)
+
 ## Supported Python versions
 * Python 3.12.1
 * Python 3.11.7
@@ -12,5 +15,5 @@
 * Works with Archlinux
 * Better than Hardware Haven's solution, can work on multiple Ngrok sessions.
 
-# Installation
+## Installation
 Check my Software Wiki for the full guide @ [mick's software wiki](https://mick.gdn/wiki/ngs.html)
